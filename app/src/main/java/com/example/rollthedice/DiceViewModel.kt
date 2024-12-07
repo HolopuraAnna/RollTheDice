@@ -15,7 +15,7 @@ class DiceViewModel : ViewModel() {
     val isRolling: LiveData<Boolean> = _isRolling
 
     suspend fun rollDice() {
-        _isRolling.postValue(true)
+        _isRolling.value = true
         while (_isRolling.value == true) {
             val newStates = List(5) { Random.nextInt(1, 7) }
             _diceStates.postValue(newStates)

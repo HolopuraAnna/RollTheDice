@@ -45,10 +45,19 @@ class MainActivity : AppCompatActivity() {
 
         rollButton.setOnClickListener {
             diceViewModel.startRolling()
+            if (rollingJob?.isActive == true) {
+                rollingJob?.cancel()
+            }
+            rollingJob = lifecycleScope.launch {
+                while (diceViewModel.isRolling.value == true) {
+                    diceViewModel.rollDice()
+                }
+            }
         }
 
         stopButton.setOnClickListener {
             diceViewModel.stopRolling()
+            rollingJob?.cancel()
         }
     }
 
