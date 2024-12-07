@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RollTheDice</string>
+    <string name="roll_the_dice">Roll The Dice</string>
+    <string name="dice_1">Dice_1</string>
+    <string name="dice_2">Dice_2</string>
+    <string name="dice_3">Dice_3</string>
+    <string name="dice_4">Dice_4</string>
+    <string name="dice_5">Dice_5</string>
+    <string name="roll">Roll</string>
+    <string name="stop">Stop</string>
+</resources>
