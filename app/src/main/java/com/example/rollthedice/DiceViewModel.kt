@@ -16,10 +16,13 @@ class DiceViewModel : ViewModel() {
 
     suspend fun rollDice() {
         _isRolling.value = true
+        val startTime = System.currentTimeMillis()  ///////
         while (_isRolling.value == true) {
-            val newStates = List(5) { Random.nextInt(1, 7) }
-            _diceStates.postValue(newStates)
-            delay(100)
+            while (System.currentTimeMillis() - startTime < 10000) {   //////
+                val newStates = List(5) { Random.nextInt(1, 7) }
+                _diceStates.postValue(newStates)
+                delay(100)
+            }
         }
     }
 
