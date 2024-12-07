@@ -37,21 +37,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        rollButton.setOnClickListener {
-            rollingJob?.cancel()
-            rollingJob = lifecycleScope.launch {
-                val startTime = System.currentTimeMillis()
-                while (System.currentTimeMillis() - startTime < 10000) {
-                    diceViewModel.rollDice()
-                    delay(100)
-                }
+        diceViewModel.isRolling.observe(this) { isRolling ->
+            if (isRolling && rollingJob == null) {
+                startRolling()
             }
         }
 
-        stopButton.setOnClickListener {
-            rollingJob?.cancel()
+        rollButton.setOnClickListener {
+            diceViewModel.startRolling()
         }
 
+        stopButton.setOnClickListener {
+            diceViewModel.stopRolling()
+        }
+    }
+
+    private fun startRolling() {
+        rollingJob = lifecycleScope.launch {
+            diceViewModel.rollDice()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rollingJob?.cancel()
     }
 
     private fun getDiceDrawable(number: Int): Int {

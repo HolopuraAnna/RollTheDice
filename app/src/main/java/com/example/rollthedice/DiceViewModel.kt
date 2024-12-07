@@ -11,9 +11,23 @@ class DiceViewModel : ViewModel() {
     private val _diceStates = MutableLiveData<List<Int>>(listOf(6, 6, 6, 6, 6))
     val diceStates: LiveData<List<Int>> = _diceStates
 
+    private val _isRolling = MutableLiveData(false)
+    val isRolling: LiveData<Boolean> = _isRolling
+
     suspend fun rollDice() {
-        val newStates = List(5) { Random.nextInt(1, 7) }
-        _diceStates.postValue(newStates)
-        delay(100)
+        _isRolling.postValue(true)
+        while (_isRolling.value == true) {
+            val newStates = List(5) { Random.nextInt(1, 7) }
+            _diceStates.postValue(newStates)
+            delay(100)
+        }
+    }
+
+    fun startRolling() {
+        _isRolling.value = true
+    }
+
+    fun stopRolling() {
+        _isRolling.value = false
     }
 }
